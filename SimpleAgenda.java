@@ -2,9 +2,9 @@
 import java.util.Scanner;
 public class SimpleAgenda {
     public static void main(String[] args) {
-        //agregarContacto();
+        agregarContacto();
         //removerContacto(9999);
-        mostrarContacto();
+        //mostrarContacto();
 
     }
     public static void agregarContacto () {
@@ -12,10 +12,12 @@ public class SimpleAgenda {
         String nombre;
         System.out.println("Ingrese un contacto a agregar");
         nombre = sc.nextLine();
-        if (nombre.length() >= 4 && nombre.length() <= 8){
+        if (nombre.length() > 4 && nombre.length() < 8){
             System.out.println("Contacto agregado con exito");
         } else if (nombre.length() > 8 && nombre.length() < 30){
             System.out.println("Contacto agregado, contiene entre 8 y 30 ");
+        } else if (nombre.length() < 4){
+            System.out.println("Nombre muy corto");
         } else {
             System.out.println("Nombre muy largo");
         }
