@@ -1,42 +1,107 @@
 
 import java.util.Scanner;
 public class SimpleAgenda {
+    public static String[] contactos = new String[10];
+
+
     public static void main(String[] args) {
         agregarContacto();
+        agregarContacto();
+        agregarContacto();
+        agregarContacto();
+        agregarContacto();
+        agregarContacto();
+        agregarContacto();
+        agregarContacto();
+        agregarContacto();
+        agregarContacto();
+        agregarContacto();
+        agregarContacto();
+        //removerContacto();
         //removerContacto(9999);
-        //mostrarContacto();
+        mostrarContactos();
+
 
     }
-    public static void agregarContacto () {
-        Scanner sc = new Scanner(System.in);
+
+    public static void agregarContacto() {
         String nombre;
-        System.out.println("Ingrese un contacto a agregar");
+        boolean existe = false;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese un contacto a agregar.");
         nombre = sc.nextLine();
-        if (nombre.length() > 4 && nombre.length() < 8){
-            System.out.println("Contacto agregado con exito");
-        } else if (nombre.length() > 8 && nombre.length() < 30){
-            System.out.println("Contacto agregado, contiene entre 8 y 30 ");
-        } else if (nombre.length() < 4){
-            System.out.println("Nombre muy corto");
-        } else {
-            System.out.println("Nombre muy largo");
+
+        for (int i = 0; i < contactos.length; i++) {
+            if (contactos[i] != null && contactos[i].equals(nombre)) {
+                existe = true;
+                break;
+            }
         }
-    }
-    public static void removerContacto (int id) {
-        if (id >= 1000 && id <= 9999){
-            System.out.println("Verificando contacto a eliminar");
+        if (existe) {
+            System.out.println("Ya se ha agregado anteriormente");
         } else {
-            System.out.println("ID invalido");
+            // Aplicar la lógica de añadir el elemento a la posición actual del arreglo
+            for (int i = 0; i < contactos.length; i++) {
+                if (contactos[i] == null) {
+                    contactos[i] = nombre;
+                    System.out.println("Agregado satisfactoriamente");
+                    break;
+                }
+            }
+        }
+
+
+    }
+
+    public static void removerContacto() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el contacto a remover:");
+        String contactoRemover = scanner.nextLine();
+
+        boolean encontrado = false;
+        for (int i = 0; i < contactos.length; i++) {
+            if (contactos[i] != null && contactos[i].equals(contactoRemover)) {
+                contactos[i] = null;
+                encontrado = true;
+                System.out.println("El contacto " + contactoRemover + " fue removido exitosamente!");
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            System.out.println("No existe tal contacto");
         }
     }
 
-    public static String actualizarContacto (int na){
+    public static String actualizarContacto(int na) {
         return "N/A";
     }
 
-    public static void mostrarContacto(){
-        System.out.println("Mostrando contactos...");
+    public static void mostrarContacto() {
+        boolean appears = false;
+        System.out.println("Ingrese contacto a mostrar");
+        Scanner sc = new Scanner(System.in);
+        String contactoExiste = sc.nextLine();
+        for (int i = 0; i < contactos.length; i++) {
+            if (contactos[i] != null && contactos[i].equals(contactoExiste)) {
+                appears = true;
+                System.out.println("El contacto " + contactoExiste + " existe.");
+                break;
+            }
+        }
+
+        if (!appears) {
+            System.out.println("No existen registros de este contacto contacto");
+        }
     }
 
-
+    public static void mostrarContactos(){
+        System.out.println("Mostrando contactos...");
+        for (int i = 0; i < contactos.length; i++) {
+            if (contactos[i] != null){
+                System.out.println(contactos[i]);
+            }
+        }
+    }
 }
