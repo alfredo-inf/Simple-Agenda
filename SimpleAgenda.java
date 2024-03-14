@@ -1,5 +1,9 @@
 
+import java.io.FileWriter;
 import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+
 public class SimpleAgenda {
     public static String[] contactos = new String[10];
 
@@ -20,6 +24,35 @@ public class SimpleAgenda {
         //removerContacto();
         //removerContacto(9999);
         mostrarContactos();
+
+
+    }
+
+    public static void generarArchivo(){
+        try {
+            File f = new File("contactos.txt");
+            f.createNewFile();
+        } catch (IOException e) {
+            System.out.println("Ocurrio un error...");;
+        }
+
+        try {
+            FileWriter f = new FileWriter("contactos.txt");
+            f.write("contacto,telefono\n" +
+
+                    "Adan,8098551212\n" +
+
+                    "Enmanuel,8294118787\n" +
+
+                    "Raider,8097410032\n" +
+
+                    "Roger,8095554141\n" );
+            f.close();
+
+        } catch (IOException e) {
+            System.out.println("Ocurrio un error...");;
+        }
+
 
 
     }
@@ -79,29 +112,36 @@ public class SimpleAgenda {
     }
 
     public static void mostrarContacto() {
-        boolean appears = false;
-        System.out.println("Ingrese contacto a mostrar");
-        Scanner sc = new Scanner(System.in);
-        String contactoExiste = sc.nextLine();
-        for (int i = 0; i < contactos.length; i++) {
-            if (contactos[i] != null && contactos[i].equals(contactoExiste)) {
-                appears = true;
-                System.out.println("El contacto " + contactoExiste + " existe.");
-                break;
-            }
-        }
+        System.out.println("Ingrese nombre a consultar...");
+        Scanner sca = new Scanner(System.in);
+        String verificandoNombre = sca.nextLine();
 
-        if (!appears) {
-            System.out.println("No existen registros de este contacto contacto");
+        try {
+            File f = new File("contactos.txt");
+            Scanner sc = new Scanner(f);
+            while(verificandoNombre){
+                String linea = verificandoNombre;
+                System.out.println(linea);
+            }
+            sc.close();
+        } catch (IOException e) {
+            System.out.println("Ocurrió un error…");
         }
     }
 
     public static void mostrarContactos(){
         System.out.println("Mostrando contactos...");
-        for (int i = 0; i < contactos.length; i++) {
-            if (contactos[i] != null){
-                System.out.println(contactos[i]);
+        try {
+            File f = new File("contactos.txt");
+            Scanner sc = new Scanner(f);
+            while(sc.hasNextLine()){
+                String linea = sc.nextLine();
+                System.out.println(linea);
             }
+            sc.close();
+        } catch (IOException e) {
+            System.out.println("Ocurrió un error…");
         }
+
     }
 }
