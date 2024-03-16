@@ -1,30 +1,19 @@
-
+import java.io.File;
 import java.io.FileWriter;
 import java.util.Scanner;
-import java.io.File;
 import java.io.IOException;
+
 
 public class SimpleAgenda {
     public static String[] contactos = new String[10];
+    public static File Agenda = new File("contactos.txt");
 
 
     public static void main(String[] args) {
-        agregarContacto();
-        agregarContacto();
-        agregarContacto();
-        agregarContacto();
-        agregarContacto();
-        agregarContacto();
-        agregarContacto();
-        agregarContacto();
-        agregarContacto();
-        agregarContacto();
-        agregarContacto();
-        agregarContacto();
-        //removerContacto();
-        //removerContacto(9999);
-        mostrarContactos();
 
+    generarArchivo();
+    mostrarContacto();
+    mostrarContactos();
 
     }
 
@@ -37,7 +26,7 @@ public class SimpleAgenda {
         }
 
         try {
-            FileWriter f = new FileWriter("contactos.txt");
+            FileWriter f = new FileWriter(Agenda);
             f.write("contacto,telefono\n" +
 
                     "Adan,8098551212\n" +
@@ -112,31 +101,42 @@ public class SimpleAgenda {
     }
 
     public static void mostrarContacto() {
-        System.out.println("Ingrese nombre a consultar...");
-        Scanner sca = new Scanner(System.in);
-        String verificandoNombre = sca.nextLine();
-
+        String contacto;
+        boolean existe = false;
         try {
-            File f = new File("contactos.txt");
-            Scanner sc = new Scanner(f);
-            while(verificandoNombre){
-                String linea = verificandoNombre;
-                System.out.println(linea);
+            Scanner scArchivo = new Scanner(Agenda);
+            Scanner sc = new Scanner(System.in);
+
+            System.out.println("Ingrese nombre a consultar");
+            contacto = sc.nextLine();
+
+            while (scArchivo.hasNextLine()){
+                String linea = scArchivo.nextLine();
+                if (linea.startsWith(contacto)){
+                    existe = true;
+                    break;
+                }
             }
-            sc.close();
-        } catch (IOException e) {
-            System.out.println("Ocurrió un error…");
+            if (existe){
+                System.out.println("El contacto " + contacto + " existe");
+            }
+            else System.out.println("No existen registros de este contacto");
+        } catch (IOException e){
+            System.out.println("Ocurrio un error...");
         }
+
+
     }
 
     public static void mostrarContactos(){
         System.out.println("Mostrando contactos...");
         try {
-            File f = new File("contactos.txt");
-            Scanner sc = new Scanner(f);
+            Scanner sc = new Scanner(Agenda);
             while(sc.hasNextLine()){
                 String linea = sc.nextLine();
-                System.out.println(linea);
+                if (!linea.startsWith("contacto")){
+                    System.out.println(linea    );
+                }
             }
             sc.close();
         } catch (IOException e) {
